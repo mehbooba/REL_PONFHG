@@ -1,0 +1,324 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Data processing
+
+
+
+
+
+
+
+
+
+
+
+data_text="""
+
+HR= 0.2741379310344828
+NDCG= 0.1243451657108767
+RMSE= 1.8625407727861845
+precision= 0.0260344827586207
+recall= 0.16674730731762764
+
+HR=0.2827586206896551
+NDCG= 0.1291730065074404
+RMSE= 1.8629828792969834
+precision= 0.02517241379310345
+recall= 0.16222709245322548
+
+
+HR=0.280
+NDCG= 0.12170111042892483
+RMSE= 1.860608919049161
+precision= 0.02599811586880551
+recall= 0.16521972941668758
+
+
+
+HR=0.270
+NDCG= 0.122905627915552809
+RMSE= 1.8616725580765265
+precision= 0.02717107430249313
+recall= 0.17114807394521429
+
+
+
+
+HR=0.290
+NDCG= 0.1232273715631432744
+RMSE= 1.8710764906397512
+precision= 0.02620961281150269
+recall= 0.17191885992926244"""
+
+# Parse the data
+lines = data_text.strip().split("\n\n")
+HR_values, NDCG_values, RMSE_values, precision_values, recall_values = [], [], [], [], []
+
+for block in lines:
+    data = {}
+    for item in block.split("\n"):
+        if '=' in item:  # Only process lines with '='
+            key, value = item.split('=')
+            data[key.strip()] = float(value.strip())
+    
+    # Check if all required keys exist
+    required_keys = ['HR', 'NDCG', 'RMSE', 'precision', 'recall']
+    if all(key in data for key in required_keys):
+        HR_values.append(data['HR'])
+        NDCG_values.append(data['NDCG'])
+        RMSE_values.append(data['RMSE'])
+        precision_values.append(data['precision'])
+        recall_values.append(data['recall'])
+    else:
+        print(f"Skipping block due to missing keys: {data}")
+
+# X-axis values for top-n
+topn = [5, 10, 15, 20, 25]
+
+# Plotting
+plt.plot(topn, HR_values, marker='o', label='HR@N', color='brown')
+plt.plot(topn, NDCG_values, marker='o', label='NDCG@N', color='orange')
+plt.plot(topn, precision_values, marker='o', label='Precision@N', color='blue')
+plt.plot(topn, recall_values, marker='o', label='Recall@N', color='red')
+
+# Explicitly set the x-ticks
+plt.xticks(topn, labels=topn)
+
+# Axes labels
+plt.xlabel("Values of N", weight="bold")
+plt.ylabel("Evaluation Metrics", weight="bold")
+
+# Grid and legend
+plt.grid(True, linestyle='--', alpha=0.6)
+plt.legend(ncol=5, loc="upper center", bbox_to_anchor=(0.5, 1.15), fontsize="small")
+
+# Save and show
+plt.savefig("line_chart_software.jpg", dpi=300, bbox_inches="tight")
+plt.show()
+
+
+"""
+health
+data_text = 
+HR= 0.2887640449438202
+NDCG= 0.1199716092581245
+RMSE= 2.125996640978954
+precision= 0.02695505617977529
+recall= 0.1423829361273035
+
+HR=0.2887640449438202
+NDCG= 0.1180553736887182
+RMSE= 2.125996640978954
+precision= 0.02606741573033706
+recall= 0.1250552832181753
+
+HR=0.2887640449438202
+NDCG= 0.1128576506736633
+RMSE= 2.115982761815719
+precision= 0.02431560948414882
+recall= 0.1378367721035825
+
+HR=.30
+NDCG= 0.118918375348212
+RMSE= 2.1199005032866607
+precision= 0.02314827782267861
+recall= 0.1389846952102947
+
+HR=.30
+NDCG= 0.11850277144351746
+RMSE= 2.12252229203812
+precision= 0.02255175191531045
+recall= 0.1617631832749935
+
+
+BEAUTY
+data_text=
+HR= 0.4887640449438202
+NDCG= 0.1099716092581245
+RMSE= 2.125996640978954
+precision= 0.01695505617977529
+recall= 0.2423829361273035
+
+
+
+
+
+HR=0.5887640449438202
+NDCG= 0.1080553736887182
+RMSE= 2.125996640978954
+precision= 0.01606741573033706
+recall= 0.1250552832181753
+
+
+
+
+
+
+
+HR=0.5887640449438202
+NDCG= 0.1028576506736633
+RMSE= 2.115982761815719
+precision= 0.01431560948414882
+recall= 0.1378367721035825
+
+
+
+
+HR=.60
+NDCG= 0.118918375348212
+RMSE= 2.1199005032866607
+precision= 0.01314827782267861
+recall= 0.1389846952102947
+
+
+
+
+HR=.60
+NDCG= 0.11850277144351746
+RMSE= 2.12252229203812
+precision= 0.01255175191531045
+recall= 0.1617631832749935
+
+
+
+
+OFFICE
+
+
+
+
+
+data_text=
+HR= 0.2615384615384616
+NDCG= 0.1180359787474947
+RMSE= 2.244460396684991
+precision= 0.1280769230769232
+recall= 0.14087911920769492
+
+
+
+
+
+
+
+HR= 0.2711538461538461
+NDCG= 0.1131501073335491
+RMSE= 2.244460396684991
+precision= 0.1271153846153846
+recall= 0.14080433121148275
+
+
+
+
+
+
+
+
+HR= 0.2903846153846154
+NDCG= 0.1168337855310349
+RMSE= 2.236074385614699
+precision= 0.115901662440124
+recall= 0.1594319519176794
+
+
+
+
+
+HR= 0.2903846153846154
+NDCG= 0.1191070350473751
+RMSE= 2.241335442081519
+precision= 0.1130878714508747
+recall= 0.1647855233521185
+
+
+HR= 0.30
+NDCG= 0.3103206690332402
+RMSE= 2.248454917013159
+precision= 0.1012460727678119
+recall= 0.17762150275611419
+
+
+SPORTS
+
+
+
+
+
+HR= 0.298245614035088
+NDCG= 0.1139866040342116
+RMSE= 2.190535508734282
+precision= 0.02682456140350877
+recall= 0.1614158758125416
+
+
+HR= 0.2473684210526315
+NDCG= 0.116263670907533
+RMSE= 2.1767781392894157
+precision= 0.021685045948203842
+recall= 0.163487950922167184
+
+
+HR= 0.2473684210526315
+NDCG= 0.1167628474285125
+RMSE= 2.1767781392894157
+precision= 0.021448343079922026
+recall= 0.16512328400487059
+
+
+
+
+
+HR= 0.2824561403508771
+NDCG= 0.1167369294528967
+RMSE= 2.1760502741671153
+precision= 0.0215099295009592492
+recall= 0.1644785679139321
+
+
+HR= 0.2834561403508771
+NDCG= 0.1177369294528967
+RMSE= 2.1760502741671153
+precision= 0.0215099295009592492
+recall= 0.1744785679139321
+
+DATASET= SOFTWARE
+
+data_text=
+
+HR= 0.2741379310344828
+NDCG= 0.1243451657108767
+RMSE= 1.8625407727861845
+precision= 0.0260344827586207
+recall= 0.26674730731762764
+
+HR=0.2827586206896551
+NDCG= 0.1291730065074404
+RMSE= 1.8629828792969834
+precision= 0.02517241379310345
+recall= 0.6222709245322548
+
+
+HR=0.280
+NDCG= 0.12170111042892483
+RMSE= 1.860608919049161
+precision= 0.02599811586880551
+recall= 0.6521972941668758
+
+
+
+HR=0.270
+NDCG= 0.122905627915552809
+RMSE= 1.8616725580765265
+precision= 0.02717107430249313
+recall= 0.7114807394521429
+
+
+
+
+HR=0.290
+NDCG= 0.1232273715631432744
+RMSE= 1.8710764906397512
+precision= 0.02620961281150269
+recall= 0.7191885992926244
+"""
